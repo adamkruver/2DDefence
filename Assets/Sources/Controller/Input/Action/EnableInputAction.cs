@@ -17,7 +17,6 @@ namespace Assets.Sources.Controller.Input.Action
 
         public void Handle(EnableInputEvent @event, IDispatcher dispatcher)
         {
-            Debug.Log("Input Enabled");
             _inputService.Enable();
         }
     }

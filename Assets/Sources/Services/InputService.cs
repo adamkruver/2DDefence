@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Assets.Sources.Services
 {
-    public class InputService : IUpdatable
+    public class InputService : AbstractService, IUpdatable
     {
         private readonly InputSetting _inputSetting;
         
@@ -20,12 +20,12 @@ namespace Assets.Sources.Services
 
         public bool IsEnabled { get; private set; }
 
-        public void Enable()
+        public override void OnEnable()
         {
             IsEnabled = true;
         }
 
-        public void Disable()
+        public override void OnDisable()
         {
             IsEnabled = false;
         }

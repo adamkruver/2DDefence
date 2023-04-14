@@ -45,7 +45,6 @@ namespace DefaultNamespace
 
         public void Move(Vector2 direction)
         {
-            Debug.Log(direction);
             _velocity = (Vector3)direction * _playerSpeed;
         }
     }

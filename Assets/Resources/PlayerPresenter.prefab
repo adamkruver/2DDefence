@@ -220,7 +220,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 900
   m_Sprite: {fileID: 21300000, guid: 520807d8b4005414e89ace0b5e4fcf81, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -355,7 +355,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 99
+  m_SortingOrder: 820
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0.24625945, g: 1, b: 0, a: 1}
   m_FlipX: 0
@@ -423,15 +423,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6628523830739203535, guid: c85c1a1134c4fc14fa0a94e5e0c1c637, type: 3}
-      propertyPath: CollisionModule.type
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6628523830739203535, guid: c85c1a1134c4fc14fa0a94e5e0c1c637, type: 3}
-      propertyPath: CollisionModule.enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6628523830739203535, guid: c85c1a1134c4fc14fa0a94e5e0c1c637, type: 3}
-      propertyPath: CollisionModule.collisionMode
+      propertyPath: CollisionModule.collisionMessages
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

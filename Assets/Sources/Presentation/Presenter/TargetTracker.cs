@@ -17,7 +17,6 @@ namespace DefaultNamespace
         
         private void Awake()
         {
-            _aggroPosition = _circleCollider2D.transform.position;
             _aggroRadius = _circleCollider2D.radius;
             _circleCollider2D.gameObject.SetActive(false);
             _targets = new Collider2D[_maxEnemies];

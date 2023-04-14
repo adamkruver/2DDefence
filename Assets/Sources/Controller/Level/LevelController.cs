@@ -3,28 +3,18 @@ using Assets.Sources.Common.MVC.Dispatcher;
 using Assets.Sources.Controller.Level.Action;
 using Assets.Sources.Services;
 using Sources.Bootstrap;
-using UnityEngine;
 
 namespace Assets.Sources.Controller.Level
 {
     public class LevelController : AbstractController, IUpdatable
     {
-        private SpiderSpawnService _spiderSpawnService = new SpiderSpawnService();
+        private readonly SpiderSpawnService _spiderSpawnService;
 
         public LevelController(IDispatcher dispatcher) : base(dispatcher)
         {
+            _spiderSpawnService = new SpiderSpawnService();
             Register(new ExitAction(this));
-            Register(new StartLevelAction(this));
-        }
-
-        public void Start()
-        {
-            _spiderSpawnService.Enable();
-        }
-        
-        public void Stop()
-        {
-            Application.Quit();
+            Register(new StartLevelAction(this, _spiderSpawnService));
         }
 
         public override void Dispose()

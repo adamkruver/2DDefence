@@ -19,6 +19,7 @@ public class Bootstrap : MonoBehaviour
         new InputController(_dispatcher, inputSetting);
         new LevelController(_dispatcher);
         new PlayerController(_dispatcher, inputSetting);
+        new CameraController(_dispatcher);
     }
 
     private void Start() => 
