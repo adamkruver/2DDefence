@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Assets.Sources.Common.MVC.Controller;
-using Sources.Bootstrap;
-using UnityEngine;
 
 namespace Assets.Sources.Common.MVC.Dispatcher
 {
@@ -25,7 +23,9 @@ namespace Assets.Sources.Common.MVC.Dispatcher
                 if (controller.ContainDispatcher(@event))
                 {
                     controller.Dispatch(@event);
-                    return;
+                    
+                    if(@event is not IControllerMulticastEvent)
+                        return;
                 }
             }
 

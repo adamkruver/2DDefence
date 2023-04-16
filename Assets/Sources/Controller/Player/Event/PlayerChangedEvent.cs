@@ -1,4 +1,5 @@
 ﻿using Assets.Sources.Common.MVC;
+using Assets.Sources.PlayerSources.Presentation.Presenter;
 using DefaultNamespace;
 
 namespace Assets.Sources.Controller.Player.Event

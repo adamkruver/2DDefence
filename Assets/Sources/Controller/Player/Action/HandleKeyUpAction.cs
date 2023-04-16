@@ -1,6 +1,6 @@
 ﻿using Assets.Sources.Common.MVC;
 using Assets.Sources.Common.MVC.Dispatcher;
-using Assets.Sources.Services;
+using Assets.Sources.PlayerSources.Services;
 using Assets.Sources.Settings;
 using Sources.Controller.Input.Event.Handle;
 
@@ -17,7 +17,6 @@ namespace Assets.Sources.Controller.Player.Action
 
         public void Handle(KeyUpEvent @event, IDispatcher dispatcher)
         {
-    //        _playerService.Move(Vector2.zero);
         }
     }
 }

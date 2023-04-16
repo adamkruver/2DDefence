@@ -1,4 +1,3 @@
-using System;
 using Assets.Sources.Common.MVC.Dispatcher;
 using Assets.Sources.Controller.Input;
 using Assets.Sources.Controller.Input.Event;
@@ -17,13 +16,13 @@ public class Bootstrap : MonoBehaviour
         InputSetting inputSetting = new InputSetting();
 
         new InputController(_dispatcher, inputSetting);
-        new LevelController(_dispatcher);
+        new GameController(_dispatcher);
         new PlayerController(_dispatcher, inputSetting);
         new CameraController(_dispatcher);
     }
 
-    private void Start() => 
-        _dispatcher.Dispatch(new StartLevelEvent());
+    private void Start() =>
+        _dispatcher.Dispatch(new StartGameEvent());
 
     private void OnEnable() =>
         _dispatcher.Dispatch(new EnableInputEvent());

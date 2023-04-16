@@ -1,7 +1,7 @@
 ﻿using Assets.Sources.Common.MVC;
 using Assets.Sources.Common.MVC.Dispatcher;
 using Assets.Sources.Controller.Player.Event;
-using Assets.Sources.Services;
+using Assets.Sources.PlayerSources.Services;
 
 namespace Assets.Sources.Controller.Player.Action
 {
@@ -16,14 +16,6 @@ namespace Assets.Sources.Controller.Player.Action
 
         public void Handle(SpawnPlayerEvent @event, IDispatcher dispatcher)
         {
-            _playerService.Clear();
-
-            for (int i = 0; i < @event.Count; i++)
-            {
-                _playerService.CreatePlayer(i);
-            }
-            
-            _playerService.SelectNext();
         }
     }
 }

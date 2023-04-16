@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Assets.Sources.Enemy.SpiderSources.Presentation.Presenter;
 using UnityEngine;
 
 namespace DefaultNamespace
@@ -19,8 +20,6 @@ namespace DefaultNamespace
         {
             int numCollisionEvents = _particleSystem.GetCollisionEvents(other, _collisionEvents);
 
-            Debug.Log(other.gameObject.name);
-            
             if (other.TryGetComponent(out SpiderPresenter spider))
             {
                 spider.TakeDamage(20);
