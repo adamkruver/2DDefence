@@ -9,15 +9,13 @@ namespace Assets.Sources.Controller.Level
 {
     public class GameController : AbstractController, IUpdatable
     {
-        private IDispatcher _dispatcher;
         private GameService _gameService;
         private ViewService _viewService = new ViewService();
 
         public GameController(IDispatcher dispatcher) : base(dispatcher)
         {
-            _dispatcher = dispatcher;
             Register(new ExitAction(this));
-            Register(new StartGameAction(this));
+            Register(new StartGameAction(this, _viewService));
         }
 
         public override void Dispose()
@@ -25,12 +23,17 @@ namespace Assets.Sources.Controller.Level
             _gameService?.Dispose();
         }
 
-        public void Start()
+        public GameService CreateGameService()
         {
-            Dispose();
+            _gameService?.Dispose();
             _gameService = new GameService(_viewService);
             _gameService.Enable();
-            _dispatcher.Dispatch(new GameStartedEvent(_gameService.TreasureProvider));
+
+            return _gameService;
+        }
+
+        public void Start()
+        {
         }
 
         public void Update()

@@ -8,13 +8,13 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Light
   - Water
   - UI
   - Enemies
-  - 
-  - 
-  - 
+  - MiniMap
+  - For All Cameras
+  - Player
   - 
   - 
   - 

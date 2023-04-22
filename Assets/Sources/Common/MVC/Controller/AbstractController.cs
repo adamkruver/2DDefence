@@ -6,13 +6,13 @@ namespace Assets.Sources.Common.MVC.Controller
 {
     public abstract class AbstractController : IController
     {
-        private readonly IDispatcher _dispatcher;
+        protected readonly IDispatcher Dispatcher;
+
         private readonly Dictionary<Type, IControllerAction> _actions = new Dictionary<Type, IControllerAction>();
 
         protected AbstractController(IDispatcher dispatcher)
         {
-            _dispatcher = dispatcher;
-            dispatcher.Register(this);
+            Dispatcher = dispatcher;
         }
 
         public abstract void Dispose();
@@ -29,12 +29,12 @@ namespace Assets.Sources.Common.MVC.Controller
 
             IControllerAction<T> action = (IControllerAction<T>)_actions[typeof(T)];
 
-            action.Handle(@event, _dispatcher);
+            action.Handle(@event, Dispatcher);
         }
 
         public void Register<T>(IControllerAction<T> action) where T : IControllerEvent
         {
-            if(_actions.ContainsKey(typeof(T)))
+            if (_actions.ContainsKey(typeof(T)))
                 return;
 
             _actions[typeof(T)] = action;

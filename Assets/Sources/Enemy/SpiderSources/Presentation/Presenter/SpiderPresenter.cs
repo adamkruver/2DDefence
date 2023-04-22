@@ -1,12 +1,13 @@
 ﻿using Assets.Sources.Common.HealthPoints;
 using Assets.Sources.Enemy.SpiderSources.Domain;
 using Assets.Sources.Presentation.Presenter;
+using Sources.Common;
 using Sources.Common.Pool;
 using UnityEngine;
 
 namespace Assets.Sources.Enemy.SpiderSources.Presentation.Presenter
 {
-    public class SpiderPresenter : PoolBehaviour
+    public class SpiderPresenter : PoolBehaviour,IMovable
     {
         [SerializeField] private float _spiderSpeed = 2;
         [SerializeField] private HealthBar _healthBar;
@@ -14,6 +15,9 @@ namespace Assets.Sources.Enemy.SpiderSources.Presentation.Presenter
         private Vector3? _target;
         private TreasureProvider _treasureProvider;
         private Spider _spider;
+
+        public Vector2 Position => transform.position;
+        public Vector2 Direction => transform.up.normalized * _spiderSpeed;
 
         public void Update()
         {

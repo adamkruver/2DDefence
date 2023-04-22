@@ -12,49 +12,58 @@ namespace Assets.Sources.Controller.Input
 {
     public class InputController : AbstractController, IUpdatable
     {
-        private readonly IDispatcher _dispatcher;
         private readonly InputService _inputService;
 
         public InputController(IDispatcher dispatcher, InputSetting inputSetting) : base(dispatcher)
         {
-            _dispatcher = dispatcher;
             _inputService = new InputService(inputSetting);
-            _inputService.KeyPressed += OnKeyPressed;
-            _inputService.KeyDown += OnKeyDown;
-            _inputService.KeyUp += OnKeyUp;
-        
+
             Register(new EnableInputAction(_inputService));
             Register(new DisableInputAction(_inputService));
             Register(new HandleKeyInputAction(inputSetting));
             Register(new HandleKeyDownInputAction(inputSetting));
             Register(new HandleKeyUpInputAction(inputSetting));
-        }
-
-        private void OnKeyUp(KeyCode key)
-        {
-            _dispatcher.Dispatch(new KeyUpInputEvent(key, _inputService.IsEnabled));
-        }
-
-        private void OnKeyDown(KeyCode key)
-        {
-            _dispatcher.Dispatch(new KeyDownInputEvent(key, _inputService.IsEnabled));
-        }
-
-        private void OnKeyPressed(KeyCode key)
-        {
-            _dispatcher.Dispatch(new KeyPressedInputEvent(key, _inputService.IsEnabled));
-        }
-
-        public override void Dispose()
-        {
-            _inputService.KeyPressed -= OnKeyPressed;
-            _inputService.KeyDown -= OnKeyDown;
-            _inputService.KeyUp -= OnKeyUp;
+            
+            AttachInputService();
         }
 
         public void Update()
         {
             _inputService.Update();
+        }
+        
+        public override void Dispose()
+        {
+            DetachInputService();
+        }
+
+        private void OnKeyPressed(KeyCode key)
+        {
+            Dispatcher.Dispatch(new KeyPressedInputEvent(key, _inputService.IsEnabled));
+        }
+
+        private void OnKeyDown(KeyCode key)
+        {
+            Dispatcher.Dispatch(new KeyDownInputEvent(key, _inputService.IsEnabled));
+        }
+
+        private void OnKeyUp(KeyCode key)
+        {
+            Dispatcher.Dispatch(new KeyUpInputEvent(key, _inputService.IsEnabled));
+        }
+
+        private void AttachInputService()
+        {
+            _inputService.KeyPressed += OnKeyPressed;
+            _inputService.KeyDown += OnKeyDown;
+            _inputService.KeyUp += OnKeyUp;
+        }
+
+        private void DetachInputService()
+        {
+            _inputService.KeyPressed -= OnKeyPressed;
+            _inputService.KeyDown -= OnKeyDown;
+            _inputService.KeyUp -= OnKeyUp;
         }
     }
 }

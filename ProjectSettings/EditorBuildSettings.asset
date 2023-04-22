@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/Scenes/Bootstrap.unity
+    guid: 799c0ceaac0e02f4b9f6e90d44577ede
+  - enabled: 1
+    path: Assets/Scenes/DreamForestLevel.unity
+    guid: 7a3a7ae63de25074ea8578fbac5cafa3
+  - enabled: 1
+    path: Assets/Scenes/GameMenu.unity
+    guid: c8b3df7132e6de04a8f413ecc4ea84b8
   m_configObjects: {}

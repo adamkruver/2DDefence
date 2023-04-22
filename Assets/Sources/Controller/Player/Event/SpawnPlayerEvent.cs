@@ -4,11 +4,11 @@ namespace Assets.Sources.Controller.Player.Event
 {
     public class SpawnPlayerEvent : IControllerEvent
     {
-        public SpawnPlayerEvent(int count)
+        public SpawnPlayerEvent(int playerCount)
         {
-            Count = count;
+            PlayerCount = playerCount;
         }
         
-        public int Count { get; }
+        public int PlayerCount { get; }
     }
 }

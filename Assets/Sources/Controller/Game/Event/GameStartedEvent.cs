@@ -5,11 +5,13 @@ namespace Assets.Sources.Controller.Level.Event
 {
     public class GameStartedEvent : IControllerMulticastEvent
     {
-        public GameStartedEvent(TreasureProvider treasureProvider)
+        public GameStartedEvent(TreasureProvider treasureProvider, int players)
         {
             TreasureProvider = treasureProvider;
+            Players = players;
         }
 
         public TreasureProvider TreasureProvider { get; }
+        public int Players { get; }
     }
 }

@@ -5,17 +5,25 @@ using Assets.Sources.PlayerSources.Domain;
 using Assets.Sources.PlayerSources.Presentation.Builder;
 using Assets.Sources.PlayerSources.Presentation.Presenter;
 using Assets.Sources.Presentation.Presenter;
+using Assets.Sources.Services;
 using UnityEngine;
 
 namespace Assets.Sources.PlayerSources.Services
 {
     public class PlayerService : AbstractService
     {
+        private readonly MovementService _movementService;
         private readonly List<Player> _players = new List<Player>();
         private readonly List<PlayerPresenter> _playerPresenters = new List<PlayerPresenter>();
         private readonly PlayerPresenterBuilder _playerPresenterBuilder = new PlayerPresenterBuilder();
 
         private int _selectedPlayerIndex = 0;
+        private TreasureProvider _treasureProvider;
+
+        public PlayerService(MovementService movementService)
+        {
+            _movementService = movementService;
+        }
 
         public event Action<PlayerPresenter> PlayerChanged;
 
@@ -35,12 +43,14 @@ namespace Assets.Sources.PlayerSources.Services
         }
 
 
-        public void Move(Vector2 direction)
+        public void Move()
         {
             if (_players.Count > 0)
             {
-                SelectedPresenter.Move(direction);
+                SelectedPresenter.Move(_movementService.Direction);
             }
+
+            _movementService.Clear();
         }
 
         public void SelectNext()
@@ -73,11 +83,11 @@ namespace Assets.Sources.PlayerSources.Services
             NotifyObservers();
         }
 
-        public void CreatePlayer(int spawnIndex, TreasureProvider treasureProvider)
+        public void CreatePlayer(int spawnIndex)
         {
             Player player = new Player();
             PlayerPresenter playerPresenter = _playerPresenterBuilder.Build(spawnIndex);
-            playerPresenter.Construct(player, treasureProvider);
+            playerPresenter.Construct(player, _treasureProvider);
             _players.Add(player);
             _playerPresenters.Add(playerPresenter);
         }
@@ -90,6 +100,11 @@ namespace Assets.Sources.PlayerSources.Services
             }
 
             PlayerChanged?.Invoke(SelectedPresenter);
+        }
+
+        public void SetTreasureProvider(TreasureProvider treasureProvider)
+        {
+            _treasureProvider = treasureProvider;
         }
     }
 }

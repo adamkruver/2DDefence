@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Assets.Sources.Common.MVC.Controller;
+using UnityEngine;
 
 namespace Assets.Sources.Common.MVC.Dispatcher
 {
-    public class Dispatcher : IDispatcher, IDisposable, IUpdatable
+    public class Dispatcher : IDispatcher, IDispatcherControllerRegistrable, IDisposable, IUpdatable
     {
         private readonly List<IController> _controllers = new List<IController>();
 
@@ -23,8 +25,8 @@ namespace Assets.Sources.Common.MVC.Dispatcher
                 if (controller.ContainDispatcher(@event))
                 {
                     controller.Dispatch(@event);
-                    
-                    if(@event is not IControllerMulticastEvent)
+
+                    if (@event is not IControllerMulticastEvent)
                         return;
                 }
             }
@@ -40,14 +42,22 @@ namespace Assets.Sources.Common.MVC.Dispatcher
             }
         }
 
+        public void UnregisterAll()
+        {
+            Dispose();
+
+            _controllers.Clear();
+        }
+
         public void Update()
         {
-            foreach (IController controller in _controllers)
+            var controllers = _controllers
+                .Where(controller => controller is IUpdatable)
+                .Cast<IUpdatable>().ToList();
+
+            foreach (IUpdatable controller in controllers)
             {
-                if (controller is IUpdatable updatableController)
-                {
-                    updatableController.Update();
-                }
+                controller.Update();
             }
         }
     }

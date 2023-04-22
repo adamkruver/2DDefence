@@ -18,14 +18,14 @@ namespace Assets.Sources.Services
         public GameService(ViewService viewService)
         {
             _viewService = viewService;
+            TreasureProvider = new TreasureProvider();
+            _score = new Score();
         }
         
         public TreasureProvider TreasureProvider { get; private set; }
 
         public override void Initialize()
         {
-            _score = new Score();
-            TreasureProvider = new TreasureProvider();
             TreasureProvider.Set(new Factory<TreasurePresenter>().Create());
             _spiderSpawnService = new SpiderSpawnService(_score, TreasureProvider);
         }

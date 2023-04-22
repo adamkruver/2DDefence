@@ -6,6 +6,7 @@ using Assets.Sources.Controller.Player.Event;
 using Assets.Sources.PlayerSources.Presentation.Presenter;
 using Assets.Sources.PlayerSources.Services;
 using Assets.Sources.Presentation.View;
+using Assets.Sources.Services;
 using Assets.Sources.Settings;
 using UnityEngine;
 
@@ -14,35 +15,46 @@ namespace Assets.Sources.Controller.Player
     public class PlayerController : AbstractController, IUpdatable
     {
         private readonly PlayerService _playerService;
-        private readonly Move _move = new Move();
-        private readonly IDispatcher _dispatcher;
+        private readonly MovementService _movementService;
 
         private PlayerScoreViewAdapter _playerScoreViewAdapter;
     
         public PlayerController(IDispatcher dispatcher, InputSetting inputSetting) : base(dispatcher)
         {
-            _dispatcher = dispatcher;
-            _playerService = new PlayerService();
-            _playerService.PlayerChanged += OnPlayerChanged;
-            Register(new HandleKeyAction(inputSetting, _move));
+            _movementService = new MovementService();
+            _playerService = new PlayerService(_movementService);
+            
+            Register(new HandleKeyAction(inputSetting, _movementService));
             Register(new HandleKeyDownAction(_playerService, inputSetting));
             Register(new GameStartedPlayerAction(_playerService));
+            Register(new SpawnPlayerAction(_playerService));
+
+            AttachPlayerService();
         }
 
         public override void Dispose()
         {
-            _playerService.PlayerChanged -= OnPlayerChanged;
+            DetachPlayerService();
         }
 
         public void Update()
         {
-            _playerService.Move(_move.Direction.normalized);
-            _move.Direction = Vector3.zero;
+            _playerService.Move();
         }
 
         private void OnPlayerChanged(PlayerPresenter player)
         {
-            _dispatcher.Dispatch(new PlayerChangedEvent(player));
+            Dispatcher.Dispatch(new PlayerChangedEvent(player));
+        }
+
+        private void AttachPlayerService()
+        {
+            _playerService.PlayerChanged += OnPlayerChanged;
+        }
+
+        private void DetachPlayerService()
+        {
+            _playerService.PlayerChanged -= OnPlayerChanged;
         }
     }
 }

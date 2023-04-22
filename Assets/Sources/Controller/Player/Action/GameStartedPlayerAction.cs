@@ -1,7 +1,9 @@
 ﻿using Assets.Sources.Common.MVC;
 using Assets.Sources.Common.MVC.Dispatcher;
 using Assets.Sources.Controller.Level.Event;
+using Assets.Sources.Controller.Player.Event;
 using Assets.Sources.PlayerSources.Services;
+using UnityEngine;
 
 namespace Assets.Sources.Controller.Player.Action
 {
@@ -16,14 +18,8 @@ namespace Assets.Sources.Controller.Player.Action
 
         public void Handle(GameStartedEvent @event, IDispatcher dispatcher)
         {
-            _playerService.Clear();
-
-            for (int i = 0; i < 2; i++)
-            {
-                _playerService.CreatePlayer(i, @event.TreasureProvider);
-            }
-
-            _playerService.SelectNext();
+            _playerService.SetTreasureProvider(@event.TreasureProvider);
+            dispatcher.Dispatch(new SpawnPlayerEvent(@event.Players));
         }
     }
 }

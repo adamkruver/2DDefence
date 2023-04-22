@@ -5,6 +5,5 @@ namespace Assets.Sources.Common.MVC.Dispatcher
     public interface IDispatcher
     {
         void Dispatch<T>(T @event) where T : IControllerEvent;
-        void Register(IController controller);
     }
 }

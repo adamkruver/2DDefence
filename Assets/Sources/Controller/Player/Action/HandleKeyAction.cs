@@ -2,6 +2,7 @@
 using Assets.Sources.Common.MVC;
 using Assets.Sources.Common.MVC.Dispatcher;
 using Assets.Sources.Controller.Player.Event;
+using Assets.Sources.Services;
 using Assets.Sources.Settings;
 using UnityEngine;
 
@@ -10,12 +11,12 @@ namespace Assets.Sources.Controller.Player.Action
     public class HandleKeyAction : IControllerAction<KeyPressedEvent>
     {
         private readonly InputSetting _inputSetting;
-        private readonly Move _move;
+        private readonly MovementService _movementService;
 
-        public HandleKeyAction(InputSetting inputSetting, Move move)
+        public HandleKeyAction(InputSetting inputSetting, MovementService movementService)
         {
             _inputSetting = inputSetting;
-            _move = move;
+            _movementService = movementService;
         }
 
         public void Handle(KeyPressedEvent pressedEvent, IDispatcher dispatcher)
@@ -34,7 +35,7 @@ namespace Assets.Sources.Controller.Player.Action
             if (actions.ContainsKey(pressedEvent.Key))
                 actions[pressedEvent.Key].Invoke();
 
-            _move.Direction += direction;
+            _movementService.AddDirection(direction);
         }
     }
 }
